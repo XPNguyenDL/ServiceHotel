@@ -7,11 +7,9 @@ namespace ServiceManagement.Core.Entities;
 public class Invoice : IEntity
 {
     [Key]
+	[ForeignKey("Room")]
 	public int Id { get; set; }
     
-    [ForeignKey("Room")]
-    public int RoomId { get; set; }
-
     [Required]
     public double Total { get; set; }
 

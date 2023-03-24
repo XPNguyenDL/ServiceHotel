@@ -22,7 +22,7 @@ public class Car : IEntity
     public string Brand { get; set; }
 	
 	[Required]
-	public DateTime DayRent { get; set; }
+	public int DayRent { get; set; }
 
 	[Required]
 	public CarStatus Status { get; set; }

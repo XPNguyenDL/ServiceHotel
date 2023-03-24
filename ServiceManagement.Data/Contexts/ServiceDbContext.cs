@@ -32,13 +32,7 @@ namespace ServiceManagement.Data.Contexts
 				.WithMany(s => s.Rooms)
 				.UsingEntity(p => p.ToTable("ServiceRoom"));
 
-			modelBuilder.Entity<Feedback>()
-				.HasKey(p =>
-					new
-					{
-						p.Id,
-						p.UserId
-					});
+			
 		}
     }
 }

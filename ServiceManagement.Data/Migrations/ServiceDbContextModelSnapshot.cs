@@ -46,8 +46,8 @@ namespace ServiceManagement.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("DayRent")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("DayRent")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -68,6 +68,10 @@ namespace ServiceManagement.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -84,10 +88,6 @@ namespace ServiceManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(2);
-
                     b.Property<string>("Description")
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
@@ -98,7 +98,11 @@ namespace ServiceManagement.Data.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.HasKey("Id", "UserId");
+                    b.Property<string>("UseName")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Feedback");
                 });
@@ -106,24 +110,15 @@ namespace ServiceManagement.Data.Migrations
             modelBuilder.Entity("ServiceManagement.Core.Entities.Invoice", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Paid")
                         .HasColumnType("bit");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
 
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RoomId")
-                        .IsUnique();
 
                     b.ToTable("Invoices");
                 });
@@ -221,7 +216,7 @@ namespace ServiceManagement.Data.Migrations
                 {
                     b.HasOne("ServiceManagement.Core.Entities.Room", "Room")
                         .WithOne("Invoice")
-                        .HasForeignKey("ServiceManagement.Core.Entities.Invoice", "RoomId")
+                        .HasForeignKey("ServiceManagement.Core.Entities.Invoice", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
