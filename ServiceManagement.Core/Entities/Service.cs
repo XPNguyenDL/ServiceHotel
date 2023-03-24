@@ -12,20 +12,17 @@ public class Service : IEntity
     [StringLength(512)]
     public string Name { get; set; }
 
+    [StringLength(512)]
+    public string ShortDescription { get; set; }
+
     [StringLength(5000)]
     public string Description { get; set; }
-
-    [Required]
-    public string Price { get; set; }
-
-    [Required]
-    public int Quantity { get; set; }
-
-    [Required]
+    
+	[Required]
     public bool Active { get; set; }
 
     [Required]
-    public bool Avaliable { get; set; }
+    public bool Available { get; set; }
 
 
     // ======================================================
@@ -34,10 +31,13 @@ public class Service : IEntity
 
 	public virtual Category Category { get; set; }
 
-    public virtual IList<Feedback> Feedbacks { get; set; }
+    public virtual IList<Feedback> Feedback { get; set; }
 
     public virtual Car Car { get; set; }
 
-    public virtual IList<Room> Rooms { get; set; }
+    [InverseProperty("Service")]
+	public virtual IList<PriceHistory> PriceHistories { get; set; }
+
+	public virtual IList<Room> Rooms { get; set; }
 
 }

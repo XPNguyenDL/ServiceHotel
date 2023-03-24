@@ -13,6 +13,10 @@ namespace ServiceManagement.Data.Contexts
 
         public DbSet<Feedback> Feedback { get; set; }
 
+		public DbSet<Price> Prices { get; set; }
+
+		public DbSet<PriceHistory> PriceHistories { get; set; }
+
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Car> Cars { get; set; }

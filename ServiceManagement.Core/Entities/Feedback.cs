@@ -12,7 +12,7 @@ public class Feedback : IEntity
 	public int Id { get; set; }
 
 	[StringLength(500)]
-	public string UseName { get; set; }
+	public string UserName { get; set; }
 
 	[StringLength(5000)]
 	public string Description { get; set; }

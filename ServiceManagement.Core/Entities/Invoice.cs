@@ -10,6 +10,12 @@ public class Invoice : IEntity
 	[ForeignKey("Room")]
 	public int Id { get; set; }
     
+	[Required]
+    public DateTime PaymentDate { get; set; }
+
+    [StringLength(5000)]
+    public string Note { get; set; }
+
     [Required]
     public double Total { get; set; }
 

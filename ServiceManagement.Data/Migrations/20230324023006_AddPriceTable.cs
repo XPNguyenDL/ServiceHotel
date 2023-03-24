@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ServiceManagement.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FixData : Migration
+    public partial class AddPriceTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +23,22 @@ namespace ServiceManagement.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Prices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Rate = table.Column<int>(type: "int", nullable: false),
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Discount = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prices", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,11 +60,10 @@ namespace ServiceManagement.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    ShortDescription = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    Price = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
-                    Avaliable = table.Column<bool>(type: "bit", nullable: false),
+                    Available = table.Column<bool>(type: "bit", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -65,6 +81,8 @@ namespace ServiceManagement.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
                     Total = table.Column<double>(type: "float", nullable: false),
                     Paid = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -105,7 +123,7 @@ namespace ServiceManagement.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    UseName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     MaxRating = table.Column<int>(type: "int", nullable: false)
@@ -116,6 +134,34 @@ namespace ServiceManagement.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Feedback_Services_Id",
                         column: x => x.Id,
+                        principalTable: "Services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PriceHistories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    PriceId = table.Column<int>(type: "int", nullable: false),
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PriceHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PriceHistories_Prices_PriceId",
+                        column: x => x.PriceId,
+                        principalTable: "Prices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PriceHistories_Services_ServiceId",
+                        column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -146,6 +192,16 @@ namespace ServiceManagement.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_PriceHistories_PriceId",
+                table: "PriceHistories",
+                column: "PriceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PriceHistories_ServiceId",
+                table: "PriceHistories",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ServiceRoom_ServicesId",
                 table: "ServiceRoom",
                 column: "ServicesId");
@@ -169,7 +225,13 @@ namespace ServiceManagement.Data.Migrations
                 name: "Invoices");
 
             migrationBuilder.DropTable(
+                name: "PriceHistories");
+
+            migrationBuilder.DropTable(
                 name: "ServiceRoom");
+
+            migrationBuilder.DropTable(
+                name: "Prices");
 
             migrationBuilder.DropTable(
                 name: "Room");
