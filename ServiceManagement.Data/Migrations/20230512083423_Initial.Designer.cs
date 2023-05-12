@@ -12,7 +12,7 @@ using ServiceManagement.Data.Contexts;
 namespace ServiceManagement.Data.Migrations
 {
     [DbContext(typeof(ServiceDbContext))]
-    [Migration("20230512072417_Initial")]
+    [Migration("20230512083423_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,37 +24,6 @@ namespace ServiceManagement.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ServiceManagement.Core.Entities.Car", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<int>("DayRent")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cars", (string)null);
-                });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Category", b =>
                 {
@@ -220,7 +189,10 @@ namespace ServiceManagement.Data.Migrations
             modelBuilder.Entity("ServiceManagement.Core.Entities.Service", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Available")
                         .ValueGeneratedOnAdd()
@@ -329,14 +301,6 @@ namespace ServiceManagement.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ServiceManagement.Core.Entities.Car", "Car")
-                        .WithOne("Service")
-                        .HasForeignKey("ServiceManagement.Core.Entities.Service", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
                     b.Navigation("Category");
                 });
 
@@ -356,11 +320,6 @@ namespace ServiceManagement.Data.Migrations
 
                     b.Navigation("Invoice");
 
-                    b.Navigation("Service");
-                });
-
-            modelBuilder.Entity("ServiceManagement.Core.Entities.Car", b =>
-                {
                     b.Navigation("Service");
                 });
 

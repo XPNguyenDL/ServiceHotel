@@ -32,8 +32,7 @@ public class ServiceMap : IEntityTypeConfiguration<Service>
 
 		builder.HasOne(s => s.Category)
 			.WithMany(s => s.Services)
-			.HasForeignKey(s => s.CategoryId);
-
-
+			.HasForeignKey(s => s.CategoryId)
+			.OnDelete(DeleteBehavior.Cascade);
 	}
 }

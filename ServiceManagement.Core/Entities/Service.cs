@@ -27,9 +27,7 @@ public class Service : IEntity
 	public Category Category { get; set; }
 
     public IList<Feedback> Feedback { get; set; }
-
-    public Car Car { get; set; }
-
+    
     public IList<PriceHistory> PriceHistories { get; set; }
 
     public IList<ServicesInvoice> ServicesInvoices { get; set; }

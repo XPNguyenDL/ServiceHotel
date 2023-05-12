@@ -25,6 +25,7 @@ public class PriceHistoriesMap : IEntityTypeConfiguration<PriceHistory>
 
 		builder.HasOne(s => s.Price)
 			.WithMany(s => s.PriceHistories)
-			.HasForeignKey(s => s.PriceId);
+			.HasForeignKey(s => s.PriceId)
+			.OnDelete(DeleteBehavior.Cascade);
 	}
 }

@@ -25,10 +25,12 @@ public class ServicesInvoiceMap : IEntityTypeConfiguration<ServicesInvoice>
 
 		builder.HasOne(s => s.Invoice)
 			.WithMany(s => s.ServicesInvoices)
-			.HasForeignKey(s => s.InvoiceId);
+			.HasForeignKey(s => s.InvoiceId)
+			.OnDelete(DeleteBehavior.Cascade);
 
 		builder.HasOne(s => s.Service)
 			.WithMany(s => s.ServicesInvoices)
-			.HasForeignKey(s => s.ServiceId);
+			.HasForeignKey(s => s.ServiceId)
+			.OnDelete(DeleteBehavior.Cascade);
 	}
 }

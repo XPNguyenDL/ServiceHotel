@@ -29,6 +29,7 @@ public class InvoiceMap : IEntityTypeConfiguration<Invoice>
 
 		builder.HasOne(s => s.Room)
 			.WithMany(s => s.Invoices)
-			.HasForeignKey(s => s.RoomId);
+			.HasForeignKey(s => s.RoomId)
+			.OnDelete(DeleteBehavior.Cascade);
 	}
 }

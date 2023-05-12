@@ -18,6 +18,5 @@ public class PriceMap : IEntityTypeConfiguration<Price>
 
 		builder.Property(s => s.Discount)
 			.HasDefaultValue(0);
-		
 	}
 }

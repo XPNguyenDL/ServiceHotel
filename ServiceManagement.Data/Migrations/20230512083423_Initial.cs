@@ -12,22 +12,6 @@ namespace ServiceManagement.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Cars",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Brand = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
-                    DayRent = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cars", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -71,7 +55,8 @@ namespace ServiceManagement.Data.Migrations
                 name: "Services",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
@@ -82,12 +67,6 @@ namespace ServiceManagement.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Services", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Services_Cars_Id",
-                        column: x => x.Id,
-                        principalTable: "Cars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Services_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -250,9 +229,6 @@ namespace ServiceManagement.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Rooms");
-
-            migrationBuilder.DropTable(
-                name: "Cars");
 
             migrationBuilder.DropTable(
                 name: "Categories");

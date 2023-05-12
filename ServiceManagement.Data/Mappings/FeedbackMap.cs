@@ -30,6 +30,7 @@ public class FeedbackMap : IEntityTypeConfiguration<Feedback>
 
 		builder.HasOne(s => s.Service)
 			.WithMany(s => s.Feedback)
-			.HasForeignKey(s => s.ServiceId);
+			.HasForeignKey(s => s.ServiceId)
+			.OnDelete(DeleteBehavior.Cascade);
 	}
 }

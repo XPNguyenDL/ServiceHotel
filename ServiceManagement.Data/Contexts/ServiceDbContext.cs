@@ -10,8 +10,6 @@ namespace ServiceManagement.Data.Contexts
 
 	    public DbSet<Service> Services { get; set; }
 
-	    public DbSet<Car> Cars { get; set; }
-
 	    public DbSet<Feedback> Feedback { get; set; }
 
 	    public DbSet<Price> Prices { get; set; }
@@ -27,7 +25,7 @@ namespace ServiceManagement.Data.Contexts
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(@"Server=DESKTOP-FQ22EB1;Database=ServiceHotel;
+			optionsBuilder.UseSqlServer(@"Server=(local);Database=ServiceHotel;
                 Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
 		}
 
