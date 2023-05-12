@@ -1,26 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServiceManagement.Core.Entities;
+using ServiceManagement.Data.Mappings;
 
 namespace ServiceManagement.Data.Contexts
 {
     public class ServiceDbContext : DbContext
     {
-        public DbSet<Room> Room { get; set; }
+	    public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Service> Services { get; set; }
+	    public DbSet<Service> Services { get; set; }
 
-        public DbSet<Invoice> Invoices { get; set; }
+	    public DbSet<Car> Cars { get; set; }
 
-        public DbSet<Feedback> Feedback { get; set; }
+	    public DbSet<Feedback> Feedback { get; set; }
 
-		public DbSet<Price> Prices { get; set; }
+	    public DbSet<Price> Prices { get; set; }
 
-		public DbSet<PriceHistory> PriceHistories { get; set; }
+	    public DbSet<PriceHistory> PriceHistories { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
+	    public DbSet<Room> Rooms { get; set; }
 
-        public DbSet<Car> Cars { get; set; }
+	    public DbSet<Invoice> Invoices { get; set; }
 
+	    public DbSet<ServicesInvoice> ServicesInvoices { get; set; }
 
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,12 +33,7 @@ namespace ServiceManagement.Data.Contexts
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Room>()
-				.HasMany(s => s.Services)
-				.WithMany(s => s.Rooms)
-				.UsingEntity(p => p.ToTable("ServiceRoom"));
-
-			
+			modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryMap).Assembly);
 		}
     }
 }

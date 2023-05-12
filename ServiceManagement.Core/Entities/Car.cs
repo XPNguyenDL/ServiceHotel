@@ -11,21 +11,15 @@ public enum CarStatus
 
 public class Car : IEntity
 {
-	[Key]
-	[ForeignKey("Service")]
 	public int Id { get; set; }
+	
+	public string Type { get; set; }
 
-	[Required]
-	public int Type { get; set; }
-
-    [StringLength(50)]
     public string Brand { get; set; }
 	
-	[Required]
 	public int DayRent { get; set; }
 
-	[Required]
 	public CarStatus Status { get; set; }
 
-	public virtual Service Service { get; set; }
+	public Service Service { get; set; }
 }

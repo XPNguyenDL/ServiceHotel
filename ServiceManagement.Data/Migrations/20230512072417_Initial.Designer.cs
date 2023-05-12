@@ -12,8 +12,8 @@ using ServiceManagement.Data.Contexts;
 namespace ServiceManagement.Data.Migrations
 {
     [DbContext(typeof(ServiceDbContext))]
-    [Migration("20230324023006_AddPriceTable")]
-    partial class AddPriceTable
+    [Migration("20230512072417_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,42 +25,35 @@ namespace ServiceManagement.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RoomService", b =>
-                {
-                    b.Property<int>("RoomsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServicesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoomsId", "ServicesId");
-
-                    b.HasIndex("ServicesId");
-
-                    b.ToTable("ServiceRoom", (string)null);
-                });
-
             modelBuilder.Entity("ServiceManagement.Core.Entities.Car", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Brand")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<int>("DayRent")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Category", b =>
@@ -72,65 +65,90 @@ namespace ServiceManagement.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Feedback", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MaxRating")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<int>("MaxRating")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(10);
+
                     b.Property<int>("Rating")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Feedback");
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("Feedback", (string)null);
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Invoice", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Note")
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<bool>("Paid")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Total")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValue(0.0);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Invoices");
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Invoices", (string)null);
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Price", b =>
@@ -141,21 +159,19 @@ namespace ServiceManagement.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double?>("Discount")
-                        .HasColumnType("float");
+                    b.Property<double>("Discount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValue(0.0);
 
-                    b.Property<DateTime?>("ModifyTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rate")
-                        .HasColumnType("int");
+                    b.Property<float>("ServicePrice")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Prices");
+                    b.ToTable("Prices", (string)null);
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.PriceHistory", b =>
@@ -166,12 +182,12 @@ namespace ServiceManagement.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ModifyTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("ModifyTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Note")
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<int>("PriceId")
                         .HasColumnType("int");
@@ -185,7 +201,7 @@ namespace ServiceManagement.Data.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("PriceHistories");
+                    b.ToTable("PriceHistories", (string)null);
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Room", b =>
@@ -198,33 +214,35 @@ namespace ServiceManagement.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Room");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Service", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("Available")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ShortDescription")
                         .HasMaxLength(512)
@@ -234,40 +252,39 @@ namespace ServiceManagement.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
-            modelBuilder.Entity("RoomService", b =>
+            modelBuilder.Entity("ServiceManagement.Core.Entities.ServicesInvoice", b =>
                 {
-                    b.HasOne("ServiceManagement.Core.Entities.Room", null)
-                        .WithMany()
-                        .HasForeignKey("RoomsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int");
 
-                    b.HasOne("ServiceManagement.Core.Entities.Service", null)
-                        .WithMany()
-                        .HasForeignKey("ServicesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
 
-            modelBuilder.Entity("ServiceManagement.Core.Entities.Car", b =>
-                {
-                    b.HasOne("ServiceManagement.Core.Entities.Service", "Service")
-                        .WithOne("Car")
-                        .HasForeignKey("ServiceManagement.Core.Entities.Car", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Price")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Navigation("Service");
+                    b.Property<int>("Quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.HasKey("InvoiceId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("ServicesInvoices", (string)null);
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Feedback", b =>
                 {
                     b.HasOne("ServiceManagement.Core.Entities.Service", "Service")
                         .WithMany("Feedback")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -277,8 +294,8 @@ namespace ServiceManagement.Data.Migrations
             modelBuilder.Entity("ServiceManagement.Core.Entities.Invoice", b =>
                 {
                     b.HasOne("ServiceManagement.Core.Entities.Room", "Room")
-                        .WithOne("Invoice")
-                        .HasForeignKey("ServiceManagement.Core.Entities.Invoice", "Id")
+                        .WithMany("Invoices")
+                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -307,10 +324,54 @@ namespace ServiceManagement.Data.Migrations
             modelBuilder.Entity("ServiceManagement.Core.Entities.Service", b =>
                 {
                     b.HasOne("ServiceManagement.Core.Entities.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .WithMany("Services")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceManagement.Core.Entities.Car", "Car")
+                        .WithOne("Service")
+                        .HasForeignKey("ServiceManagement.Core.Entities.Service", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ServiceManagement.Core.Entities.ServicesInvoice", b =>
+                {
+                    b.HasOne("ServiceManagement.Core.Entities.Invoice", "Invoice")
+                        .WithMany("ServicesInvoices")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceManagement.Core.Entities.Service", "Service")
+                        .WithMany("ServicesInvoices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("ServiceManagement.Core.Entities.Car", b =>
+                {
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("ServiceManagement.Core.Entities.Category", b =>
+                {
+                    b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("ServiceManagement.Core.Entities.Invoice", b =>
+                {
+                    b.Navigation("ServicesInvoices");
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Price", b =>
@@ -320,16 +381,16 @@ namespace ServiceManagement.Data.Migrations
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Room", b =>
                 {
-                    b.Navigation("Invoice");
+                    b.Navigation("Invoices");
                 });
 
             modelBuilder.Entity("ServiceManagement.Core.Entities.Service", b =>
                 {
-                    b.Navigation("Car");
-
                     b.Navigation("Feedback");
 
                     b.Navigation("PriceHistories");
+
+                    b.Navigation("ServicesInvoices");
                 });
 #pragma warning restore 612, 618
         }

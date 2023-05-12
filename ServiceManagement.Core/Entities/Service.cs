@@ -6,38 +6,31 @@ namespace ServiceManagement.Core.Entities;
 
 public class Service : IEntity
 {
-    [Key]
 	public int Id { get; set; }
-
-    [StringLength(512)]
+    
     public string Name { get; set; }
-
-    [StringLength(512)]
+    
     public string ShortDescription { get; set; }
-
-    [StringLength(5000)]
+    
     public string Description { get; set; }
     
-	[Required]
-    public bool Active { get; set; }
-
-    [Required]
+    public bool IsDeleted { get; set; }
+    
     public bool Available { get; set; }
 
+    public int CategoryId { get; set; }
 
     // ======================================================
     // Navigation properties
     // ======================================================
 
-	public virtual Category Category { get; set; }
+	public Category Category { get; set; }
 
-    public virtual IList<Feedback> Feedback { get; set; }
+    public IList<Feedback> Feedback { get; set; }
 
-    public virtual Car Car { get; set; }
+    public Car Car { get; set; }
 
-    [InverseProperty("Service")]
-	public virtual IList<PriceHistory> PriceHistories { get; set; }
+    public IList<PriceHistory> PriceHistories { get; set; }
 
-	public virtual IList<Room> Rooms { get; set; }
-
+    public IList<ServicesInvoice> ServicesInvoices { get; set; }
 }

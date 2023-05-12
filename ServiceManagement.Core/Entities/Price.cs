@@ -7,47 +7,32 @@ namespace ServiceManagement.Core.Entities;
 
 public class Price
 {
-	[Key]
 	public int Id { get; set; }
+	
+	public float ServicePrice { get; set; }
 
-	[Required]
-	public int Rate { get; set; }
+	public double Discount { get; set; }
 
-	public DateTime? ModifyTime { get; set; }
-
-	[Required]
-	public int Quantity { get; set; }
-
-	public double? Discount { get; set; }
-
-
-	public virtual IList<PriceHistory> PriceHistories { get; set; }
+	public IList<PriceHistory> PriceHistories { get; set; }
 }
 
 public class PriceHistory
 {
-	[Key]
 	public int Id { get; set; }
 
-	[ForeignKey("Service")]
 	public int ServiceId { get; set; }
 
-	[ForeignKey("Price")]
 	public int PriceId { get; set; }
 
-	public DateTime? ModifyTime { get; set; }
+	public DateTime ModifyTime { get; set; }
 
-	[StringLength(5000)]
 	public string Note { get; set; }
 
 	// ======================================================
 	// Navigation properties
 	// ======================================================
 	
-	public virtual Price Price { get; set; }
-
-	[ForeignKey("ServiceId")]
-	[InverseProperty("PriceHistories")]
-	[Required]
-	public virtual Service Service { get; set; }
+	public Price Price { get; set; }
+	
+	public Service Service { get; set; }
 }

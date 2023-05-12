@@ -6,21 +6,23 @@ namespace ServiceManagement.Core.Entities;
 
 public class Invoice : IEntity
 {
-    [Key]
-	[ForeignKey("Room")]
 	public int Id { get; set; }
+
+	public int RoomId { get; set; }
     
-	[Required]
     public DateTime PaymentDate { get; set; }
-
-    [StringLength(5000)]
+    
     public string Note { get; set; }
-
-    [Required]
+    
     public double Total { get; set; }
-
-    [Required]
+    
     public bool Paid { get; set; }
 
-    public virtual Room Room { get; set; }
+    // ======================================================
+    // Navigation properties
+    // ======================================================
+
+    public IList<ServicesInvoice> ServicesInvoices { get; set; }
+
+	public Room Room { get; set; }
 }
