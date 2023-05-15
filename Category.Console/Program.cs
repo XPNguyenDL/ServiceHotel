@@ -22,9 +22,9 @@ seeder.Initialize();
 #endregion
 
 #region Change category available status
-Console.WriteLine("".PadRight(80, '-'));
-Console.WriteLine("Change Category available status");
-var categoryAvailable = await categoryRepository.GetCategoriesDeletedAsync();
+//Console.WriteLine("".PadRight(80, '-'));
+//Console.WriteLine("Change Category available status");
+//var categoryAvailable = await categoryRepository.GetCategoriesDeletedAsync();
 // sửa lại kết quả console
 
 
