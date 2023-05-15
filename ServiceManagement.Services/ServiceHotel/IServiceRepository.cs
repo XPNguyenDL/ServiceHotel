@@ -52,4 +52,10 @@ public interface IServiceRepository {
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<bool> RestoreServicesAsync(int serviceId, CancellationToken cancellationToken = default);
+
+    Task<IList<Service>> GetServicesAsync(CancellationToken cancellationToken = default);
+
+    Task<bool> ChangeServiceDeleteStatusAsync(int id, CancellationToken cancellationToken = default);
+
+    Task<Service> CreateServiceAsync(Service service, CancellationToken cancellationToken = default);
 }
