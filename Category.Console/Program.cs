@@ -21,12 +21,17 @@ seeder.Initialize();
 //Console.WriteLine("".PadRight(80, '-'));
 #endregion
 
-#region Change category available status
-Console.WriteLine("".PadRight(80, '-'));
-Console.WriteLine("Change Category available status");
-var categoryAvailable = await categoryRepository.GetCategoriesDeletedAsync();
-// sửa lại kết quả console
+#region Get Deleted Categories
 
+//var deletedCate = await categoryRepository.GetDeletedCategoryAsync();
 
+//Console.WriteLine("{0,-5}{1,-10}{2,40}",
+//    "Id", "Name", "Description");
+
+//foreach (var item in deletedCate)
+//{
+//    Console.WriteLine("{0,-5}{1,-10}{2,40}",
+//        item.Id, item.Name, item.Description);
+//}
 #endregion
 

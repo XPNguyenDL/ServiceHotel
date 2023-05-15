@@ -19,5 +19,13 @@ public class CategoryRepository : ICategoryRepository
              .Where(c => c.Id == id)
              .ExecuteUpdateAsync(x => x.SetProperty(c => c.IsDeleted, c => !c.IsDeleted), cancellationToken) > 0;
     }
-    
+
+    public async Task<IList<Category>> GetDeletedCategoryAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Set<Category>()
+            .Where(x => x.IsDeleted == true)
+            .ToListAsync(cancellationToken);
+    }
+
 }
+
