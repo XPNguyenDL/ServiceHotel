@@ -16,4 +16,13 @@ public class ServiceRepository : IServiceRepository {
             .Where(s => s.Id == id && s.IsDeleted)
             .ExecuteDeleteAsync(cancellationToken) > 0;
     }
+
+    public async Task<Service> UpdateServiceInfomationAsync(Service service, CancellationToken cancellationToken = default) {
+        if (_context.Set<Service>().Any(s => s.Id == service.Id))
+            _context.Entry(service).State = EntityState.Modified;
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return service;
+    }
 }
