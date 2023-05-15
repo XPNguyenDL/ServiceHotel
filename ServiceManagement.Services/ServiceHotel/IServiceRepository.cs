@@ -1,4 +1,6 @@
-﻿using ServiceManagement.Core.Entities;
+﻿using ServiceManagement.Core.Contracts;
+using ServiceManagement.Core.Entities;
+using ServiceManagement.Core.Queries;
 
 namespace ServiceManagement.Services.ServiceHotel;
 
@@ -26,4 +28,20 @@ public interface IServiceRepository {
     /// <param name="cancellationToken"></param>
     /// <returns>Toggle status</returns>
     Task<bool> ToggleServiceAvailableStatusAsync(int id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Filter Services by query
+    /// </summary>
+    /// <param name="query">Service query</param>
+    /// <returns>Service Queryable</returns>
+    IQueryable<Service> FilterServices(IServiceQuery query);
+
+    /// <summary>
+    /// Filter
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="pagingParams"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<IPagedList<Service>> GetPagedServicesByQueryAsync(IServiceQuery query, IPagingParams pagingParams, CancellationToken cancellationToken = default);
 }

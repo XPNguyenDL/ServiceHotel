@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ServiceManagement.Core.Contracts;
 using ServiceManagement.Core.Entities;
+using ServiceManagement.Core.Queries;
 using ServiceManagement.Data.Contexts;
+using ServiceManagement.Services.Extensions;
 
 namespace ServiceManagement.Services.ServiceHotel;
 
@@ -18,10 +21,10 @@ public class ServiceRepository : IServiceRepository {
     }
 
     public async Task<Service> UpdateServiceInfomationAsync(Service service, CancellationToken cancellationToken = default) {
-        if (_context.Set<Service>().Any(s => s.Id == service.Id))
+        if (_context.Set<Service>().Any(s => s.Id == service.Id)) {
             _context.Entry(service).State = EntityState.Modified;
-
-        await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
 
         return service;
     }
@@ -30,5 +33,30 @@ public class ServiceRepository : IServiceRepository {
         return await _context.Set<Service>()
             .Where(s => s.Id == id)
             .ExecuteUpdateAsync(s => s.SetProperty(s => s.Available, s => !s.Available), cancellationToken) > 0;
+    }
+
+    public IQueryable<Service> FilterServices(IServiceQuery query) {
+        IQueryable<Service> services = _context.Set<Service>();
+
+        if (query.IsDeleted)
+            services = services.Where(s => s.IsDeleted);
+        if (!query.IsDeleted)
+            services = services.Where(s => !s.IsDeleted);
+        if (query.Available)
+            services = services.Where(s => s.Available);
+        if (!query.Available)
+            services = services.Where(s => !s.Available);
+        if (query.CategoryId > 0)
+            services = services.Where(s => s.CategoryId == query.CategoryId);
+        if (!string.IsNullOrWhiteSpace(query.Keyword))
+            services = services.Where(s => s.Name.ToLower().Contains(query.Keyword.ToLower()) ||
+            s.ShortDescription.ToLower().Contains(query.Keyword.ToLower()) ||
+            s.Description.ToLower().Contains(query.Keyword.ToLower()));
+
+        return services;
+    }
+
+    public async Task<IPagedList<Service>> GetPagedServicesByQueryAsync(IServiceQuery query, IPagingParams pagingParams, CancellationToken cancellationToken = default) {
+        return await FilterServices(query).ToPagedListAsync(pagingParams, cancellationToken);
     }
 }
