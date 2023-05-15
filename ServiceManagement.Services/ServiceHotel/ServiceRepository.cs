@@ -25,4 +25,10 @@ public class ServiceRepository : IServiceRepository {
 
         return service;
     }
+
+    public async Task<bool> ToggleServiceAvailableStatusAsync(int id, CancellationToken cancellationToken = default) {
+        return await _context.Set<Service>()
+            .Where(s => s.Id == id)
+            .ExecuteUpdateAsync(s => s.SetProperty(s => s.Available, s => !s.Available), cancellationToken) > 0;
+    }
 }

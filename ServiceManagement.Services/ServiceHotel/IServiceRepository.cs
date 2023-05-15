@@ -18,4 +18,12 @@ public interface IServiceRepository {
     /// <param name="cancellationToken"></param>
     /// <returns>Updated Service</returns>
     Task<Service> UpdateServiceInfomationAsync(Service service, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Toggle Service available status
+    /// </summary>
+    /// <param name="id">Service's Id</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Toggle status</returns>
+    Task<bool> ToggleServiceAvailableStatusAsync(int id, CancellationToken cancellationToken = default);
 }
