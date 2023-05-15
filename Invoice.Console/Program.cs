@@ -3,11 +3,12 @@ using ServiceManagement.Core.Entities;
 using ServiceManagement.Data.Contexts;
 using ServiceManagement.Data.Seeders;
 using ServiceManagement.Services.ServiceHotel;
+using System.Text;
 
 var context = new ServiceDbContext();
 
 IInvoiceRepository repository = new InvoiceRepository(context);
-
+Console.OutputEncoding = Encoding.UTF8;
 
 var seeder = new DataSeeder(context);
 seeder.Initialize();
@@ -117,16 +118,16 @@ seeder.Initialize();
 
 #region Task: Delete invoice
 
-Console.WriteLine("----------------------------------------");
-Console.WriteLine("Task: Restore Services from recycle bin");
+//Console.WriteLine("----------------------------------------");
+//Console.WriteLine("Task: Restore Services from recycle bin");
 
-if (await repository.DeletedInvoiceAsync(6))
-{
-	Console.WriteLine("Result: Restore success");
-}
-else
-{
-	Console.WriteLine("Result: Restore fail");
-}
+//if (await repository.DeletedInvoiceAsync(6))
+//{
+//	Console.WriteLine("Result: Restore success");
+//}
+//else
+//{
+//	Console.WriteLine("Result: Restore fail");
+//}
 
 #endregion
