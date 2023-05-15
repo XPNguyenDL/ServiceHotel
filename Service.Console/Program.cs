@@ -1,5 +1,7 @@
-﻿using ServiceManagement.Data.Contexts;
+﻿using ServiceManagement.Core.Collections;
+using ServiceManagement.Data.Contexts;
 using ServiceManagement.Services.ServiceHotel;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 var context = new ServiceDbContext();
 IServiceRepository serviceRepository = new ServiceRepository(context);
@@ -88,4 +90,20 @@ IPriceRepository priceRepository = new PriceRepository(context);
 //}
 
 //Console.WriteLine("----------------------------------------");
+#endregion
+
+#region Task: Restore Services from recycle bin
+Console.WriteLine("----------------------------------------");
+Console.WriteLine("Task: Restore Services from recycle bin");
+
+
+if (await serviceRepository.RestoreServicesAsync(1))
+{
+	Console.WriteLine("Result: Restore success");
+}
+else
+{
+	Console.WriteLine("Result: Restore fail");
+}
+
 #endregion
