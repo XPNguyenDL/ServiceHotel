@@ -44,4 +44,12 @@ public interface IServiceRepository {
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<IPagedList<Service>> GetPagedServicesByQueryAsync(IServiceQuery query, IPagingParams pagingParams, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Restore services from recycle bin
+    /// </summary>
+    /// <param name="serviceId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<bool> RestoreServicesAsync(int serviceId, CancellationToken cancellationToken = default);
 }
