@@ -11,5 +11,9 @@ public class Category : IEntity
 
 	public string Description { get; set; }
 
-	public IList<Service> Services { get; set; }
+    public bool Available { get; set; }
+
+    public bool IsDeleted { get; set; }
+
+    public IList<Service> Services { get; set; }
 }

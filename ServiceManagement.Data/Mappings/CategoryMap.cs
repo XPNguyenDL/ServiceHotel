@@ -18,5 +18,13 @@ public class CategoryMap : IEntityTypeConfiguration<Category>
 
 		builder.Property(p => p.Description)
 			.HasMaxLength(512);
-	}
+
+        builder.Property(p => p.IsDeleted)
+			.IsRequired()
+			.HasDefaultValue(false);
+
+        builder.Property(p => p.Available)
+			.IsRequired()
+			.HasDefaultValue(true);
+    }
 }
