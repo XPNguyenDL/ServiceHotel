@@ -1,6 +1,6 @@
 ﻿namespace ServiceManagement.Core.DTO
 {
-    public class CategoryDTO
+    public class CategoryDto
     {
         public string Name { get; set; }
 
@@ -10,6 +10,6 @@
 
         public bool IsDeleted { get; set; }
 
-        public int CountServices { get; set; }
+        public int ServicesCount { get; set; }
     }
 }

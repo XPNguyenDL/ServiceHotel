@@ -42,11 +42,11 @@ public class CategoryRepository : ICategoryRepository
 			.ExecuteDeleteAsync(cancellationToken) > 0;
 	}
     //U1.1 Hiển thị danh mục dịch vụ
-	public async Task<IList<CategoryDTO>> GetCategoriesAsync(CancellationToken cancellationToken = default)
+	public async Task<IList<CategoryDto>> GetCategoriesAsync(CancellationToken cancellationToken = default)
 	{
         return await _context.Set<Category>()
             .Include(s => s.Services)
-            .Select(c => new CategoryDTO()
+            .Select(c => new CategoryDto()
             {
                 Name = c.Name,
                 Description = c.Description,
@@ -62,6 +62,4 @@ public class CategoryRepository : ICategoryRepository
             .Where(x => x.IsDeleted == true)
             .ToListAsync(cancellationToken);
     }
-
 }
-

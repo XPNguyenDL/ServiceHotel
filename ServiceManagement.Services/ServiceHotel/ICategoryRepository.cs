@@ -1,4 +1,5 @@
-﻿using ServiceManagement.Core.Entities;
+﻿using ServiceManagement.Core.DTO;
+using ServiceManagement.Core.Entities;
 
 namespace ServiceManagement.Services.ServiceHotel;
 
@@ -8,7 +9,7 @@ public interface ICategoryRepository
 
     Task<IList<Category>> GetDeletedCategoryAsync(CancellationToken cancellationToken = default);
 
-    Task<IList<Category>> GetCategoriesAsync(CancellationToken cancellationToken = default);
+    Task<IList<CategoryDto>> GetCategoriesAsync(CancellationToken cancellationToken = default);
 
     Task<bool> AddOrUpdateAsync(Category category, CancellationToken cancellationToken = default);
 
