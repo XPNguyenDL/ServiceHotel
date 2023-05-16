@@ -10,5 +10,6 @@
 
         public bool IsDeleted { get; set; }
 
+        public int CountServices { get; set; }
     }
 }
