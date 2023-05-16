@@ -11,6 +11,7 @@ public interface ICategoryRepository
 
     Task<IList<CategoryDto>> GetCategoriesAsync(CancellationToken cancellationToken = default);
 
+
     Task<bool> AddOrUpdateAsync(Category category, CancellationToken cancellationToken = default);
 
     Task<bool> DeleteCategory(int id, CancellationToken cancellationToken = default);
