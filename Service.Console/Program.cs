@@ -1,25 +1,78 @@
-﻿using ServiceManagement.Data.Contexts;
+using ServiceManagement.Core.Collections;
+using ServiceManagement.Core.Entities;
+using ServiceManagement.Core.Queries;
+using ServiceManagement.Data.Contexts;
 using ServiceManagement.Services.ServiceHotel;
+using System.Text;
 
 var context = new ServiceDbContext();
 IServiceRepository serviceRepository = new ServiceRepository(context);
 IPriceRepository priceRepository = new PriceRepository(context);
+Console.OutputEncoding = Encoding.UTF8;
+
+#region U2 .2 Create Service
+//Console.WriteLine("".PadRight(80, '-'));
+//Console.WriteLine("Create Service");
+
+//var createService = new Service()
+//{
+//	Id = 10,
+//	Name = "Dich vu test",
+//	ShortDescription = "Dich vu test  ShortDescription",
+//	Description = "Dich vu test  Description",
+//	CategoryId = 1
+//};
+//var createdService = await serviceRepository.CreateServiceAsync(createService);
+//Console.WriteLine("Id: " + createdService.Id);
+//Console.WriteLine("Name: " + createdService.Name);
+//Console.WriteLine("Short Description: " + createdService.ShortDescription);
+//Console.WriteLine("Description: " + createdService.Description);
+//Console.WriteLine("Isdeleted: " + createdService.IsDeleted);
+//Console.WriteLine("Available: " + createdService.Available);
+//Console.WriteLine("CategoryId: " + createdService.CategoryId);
+//Console.WriteLine("".PadRight(80, '-'));
+#endregion
+
+#region Change Service delete status
+//Console.WriteLine("".PadRight(80, '-'));
+//Console.WriteLine("Change Service delete status");
+//var deleteStatus = await serviceRepository.ChangeServiceDeleteStatusAsync(2);
+//if (deleteStatus)
+//	Console.WriteLine("Change successfully.");
+//else
+//	Console.WriteLine("Change failed.");
+//Console.WriteLine("".PadRight(80, '-'));
+#endregion
+
+#region
+//var services = await serviceRepository.GetServicesAsync();
+
+//Console.WriteLine("{0,-5}{1,-10}{2,40}{3,55}",
+//	"ID", "Name", "Short Description", "Description");
+
+//foreach (var item in services)
+//{
+//	Console.WriteLine("{0,-5}{1,-10}{2,40}{3,55}",
+//		item.Id, item.Name, item.ShortDescription, item.Description);
+//}
+#endregion
 
 #region Task: Delete permanently a Service by Id
 //Console.WriteLine("----------------------------------------");
 //Console.WriteLine("Task: Delete permanently a Service by Id");
 //Console.WriteLine("Result:");
 //var price = await priceRepository.GetPriceByServiceIdAsync(4);
-//if (price != null) {
-//    await priceRepository.DeletePriceByIdAsync(price.Id);
+//if (price != null)
+//{
+//	await priceRepository.DeletePriceByIdAsync(price.Id);
 //}
 
 //var isSuccess = await serviceRepository.DeleteServiceByIdAsync(4);
 
 //if (isSuccess)
-//    Console.WriteLine("Service deleted.");
+//	Console.WriteLine("Service deleted.");
 //else
-//    Console.WriteLine("Service not found.");
+//	Console.WriteLine("Service not found.");
 
 //Console.WriteLine("----------------------------------------");
 #endregion
@@ -28,14 +81,15 @@ IPriceRepository priceRepository = new PriceRepository(context);
 //Console.WriteLine("----------------------------------------");
 //Console.WriteLine("Task: Update Service information");
 //Console.WriteLine("Result:");
-//var newService = new Service() {
-//    Id = 9,
-//    Name = "Dịch vụ taxi",
-//    ShortDescription = "Dịch vụ đặt xe taxi hộ",
-//    Description = "Khi khách hàng sử dụng dịch vụ này, khách sạn sẽ đặt hộ taxi theo yêu cầu của khách hàng và không thu thêm bất kì chi phí dịch vụ nào.",
-//    IsDeleted = false,
-//    Available = true,
-//    CategoryId = 3
+//var newService = new Service()
+//{
+//	Id = 9,
+//	Name = "Dịch vụ taxi",
+//	ShortDescription = "Dịch vụ đặt xe taxi hộ",
+//	Description = "Khi khách hàng sử dụng dịch vụ này, khách sạn sẽ đặt hộ taxi theo yêu cầu của khách hàng và không thu thêm bất kì chi phí dịch vụ nào.",
+//	IsDeleted = false,
+//	Available = true,
+//	CategoryId = 3
 //};
 //var updatedService = await serviceRepository.UpdateServiceInfomationAsync(newService);
 //Console.WriteLine("Service id: " + updatedService.Id);
@@ -55,9 +109,9 @@ IPriceRepository priceRepository = new PriceRepository(context);
 //Console.WriteLine("Result:");
 //var isSuccess = await serviceRepository.ToggleServiceAvailableStatusAsync(1);
 //if (isSuccess)
-//    Console.WriteLine("Toggled successfully.");
+//	Console.WriteLine("Toggled successfully.");
 //else
-//    Console.WriteLine("Toggled failed.");
+//	Console.WriteLine("Toggled failed.");
 //Console.WriteLine("----------------------------------------");
 #endregion
 
@@ -65,27 +119,44 @@ IPriceRepository priceRepository = new PriceRepository(context);
 //Console.WriteLine("----------------------------------------");
 //Console.WriteLine("Task: Find Services by query");
 //Console.WriteLine("Result:");
-//var query = new ServiceQuery() {
-//    IsDeleted = true,
-//    Available = true,
+//var query = new ServiceQuery()
+//{
+//	IsDeleted = true,
+//	Available = true,
 //};
-//var pagingParams = new PagingParams() {
-//    PageNumber = 1,
-//    PageSize = 10,
+//var pagingParams = new PagingParams()
+//{
+//	PageNumber = 1,
+//	PageSize = 10,
 //};
 //var services = await serviceRepository.GetPagedServicesByQueryAsync(query, pagingParams);
 //Console.WriteLine();
-//foreach (var service in services) {
-//    var price = await priceRepository.GetPriceByServiceIdAsync(service.Id);
-//    Console.WriteLine("Service name: " + service.Name);
-//    Console.WriteLine("Service short description: " + service.ShortDescription);
-//    Console.WriteLine("Service description: " + service.Description);
-//    Console.WriteLine("Service price: " + price.ServicePrice);
-//    Console.WriteLine("Service deleted status: " + service.IsDeleted);
-//    Console.WriteLine("Service available status: " + service.Available);
-//    Console.WriteLine("Service category id: " + service.CategoryId);
-//    Console.WriteLine();
+//foreach (var service in services)
+//{
+//	var price = await priceRepository.GetPriceByServiceIdAsync(service.Id);
+//	Console.WriteLine("Service name: " + service.Name);
+//	Console.WriteLine("Service short description: " + service.ShortDescription);
+//	Console.WriteLine("Service description: " + service.Description);
+//	Console.WriteLine("Service price: " + price.ServicePrice);
+//	Console.WriteLine("Service deleted status: " + service.IsDeleted);
+//	Console.WriteLine("Service available status: " + service.Available);
+//	Console.WriteLine("Service category id: " + service.CategoryId);
+//	Console.WriteLine();
 //}
 
 //Console.WriteLine("----------------------------------------");
+#endregion
+
+#region Task: Restore Services from recycle bin
+//Console.WriteLine("----------------------------------------");
+//Console.WriteLine("Task: Restore Services from recycle bin");
+
+//if (await serviceRepository.RestoreServicesAsync(1))
+//{
+//	Console.WriteLine("Result: Restore success");
+//}
+//else
+//{
+//	Console.WriteLine("Result: Restore fail");
+//}
 #endregion

@@ -8,7 +8,7 @@ public class ServicesInvoice
 
 	public int Quantity { get; set; }
 
-	public int Price { get; set; }
+	public double Price { get; set; }
 
 	public Service Service { get; set; }
 
