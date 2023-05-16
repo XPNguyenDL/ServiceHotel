@@ -10,6 +10,7 @@ public interface IInvoiceRepository
 
 	Task<Invoice> CreateInvoiceAsync(Invoice invoice, CancellationToken cancellationToken = default);
 	Task<Invoice> AddServicesInvoiceAsync(int invoiceId, IList<ServicesInvoiceDto> servicesInvoices, CancellationToken cancellationToken = default);
+
 	Task<bool> DeletedInvoiceAsync(int invoiceId, CancellationToken cancellationToken = default);
 
     Task<List<Invoice>> GetInvoicesByCategoryAsync(int categoryId, CancellationToken cancellationToken = default);
@@ -26,4 +27,5 @@ public interface IInvoiceRepository
     Task<double> RevenueByTimeAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default);
 
     
+    Task<Invoice> UpdateServicesInvoiceAsync(int invoiceId, IList<ServicesInvoiceDto> servicesInvoices, CancellationToken cancellationToken = default);
 }

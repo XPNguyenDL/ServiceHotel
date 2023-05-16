@@ -83,7 +83,21 @@ public class InvoiceRepository : IInvoiceRepository
 		return invoice;
 	}
 
-	public async Task<bool> DeletedInvoiceAsync(int invoiceId, CancellationToken cancellationToken = default)
+    public async Task<Invoice> UpdateServicesInvoiceAsync(int invoiceId, IList<ServicesInvoiceDto> servicesInvoices, CancellationToken cancellationToken = default)
+    {
+
+        var invoice = await _context.Set<Invoice>()
+        .Include(s => s.Room)
+        .Include(s => s.ServicesInvoices)
+        .FirstOrDefaultAsync(s => s.Id == invoiceId, cancellationToken);
+
+		if (invoice == null) return null;
+
+        invoice.ServicesInvoices.Clear();
+        return await AddServicesInvoiceAsync(invoiceId, servicesInvoices, cancellationToken);
+    }
+
+    public async Task<bool> DeletedInvoiceAsync(int invoiceId, CancellationToken cancellationToken = default)
 	{
 
 		return await _context.Invoices
