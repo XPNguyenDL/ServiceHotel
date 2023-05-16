@@ -1,4 +1,5 @@
-﻿using ServiceManagement.Data.Contexts;
+﻿using ServiceManagement.Core.Entities;
+using ServiceManagement.Data.Contexts;
 using ServiceManagement.Data.Seeders;
 using ServiceManagement.Services.ServiceHotel;
 using System.Text;
@@ -10,6 +11,50 @@ Console.OutputEncoding = Encoding.UTF8;
 
 var seeder = new DataSeeder(context);
 seeder.Initialize();
+
+#region Get All Categories
+//Console.WriteLine("".PadRight(80, '-'));
+//Console.WriteLine("All Categories");
+//var categories = await categoryRepository.GetCategoriesAsync();
+//foreach (var category in categories)
+//{
+//	Console.WriteLine("{0,-4}{1,-30}{2,-30}{3,12}", category.Name, category.Description, category.IsDeleted, category.ServicesCount);
+//}
+#endregion
+
+#region Add Categories
+//Console.WriteLine("".PadRight(80, '-'));
+//Console.WriteLine("Add Category");
+//var newCat = new Category()
+//{
+//    Name = "New Category",
+//    Description = "Description",
+//    IsDeleted = false,
+//};
+//var addCat = await categoryRepository.AddOrUpdateAsync(newCat);
+//if (addCat)
+//    Console.WriteLine("Thêm thành công");
+//else
+//    Console.WriteLine("failed.");
+//Console.WriteLine("".PadRight(80, '-'));
+#endregion
+
+#region UpdateCategory(Nhớ thay cái id)
+//var newCat = new Category()
+//{
+//	//id  Category muốn thay đổi
+//	Id=1,
+//	Name = "New Category",
+//	Description = "Description",
+//	IsDeleted = false,
+//};
+//var updateCat = await categoryRepository.AddOrUpdateAsync(newCat);
+//if (updateCat)
+//	Console.WriteLine("sửa thành công");
+//else
+//	Console.WriteLine("failed.");
+//Console.WriteLine("".PadRight(80, '-'));
+#endregion
 
 #region Change category delete status
 //Console.WriteLine("".PadRight(80, '-'));
@@ -38,3 +83,13 @@ seeder.Initialize();
 //}
 #endregion
 
+#region DeleteCategory(Xóa vĩnh viễn!)
+//Console.WriteLine("".PadRight(80, '-'));
+//Console.WriteLine("Delete Category");
+//var categoryDelete = await categoryRepository.DeleteCategory(2);
+//if (categoryDelete)
+//    Console.WriteLine("Delete successfully.");
+//else
+//    Console.WriteLine(" failed.");
+//Console.WriteLine("".PadRight(80, '-'));
+#endregion
