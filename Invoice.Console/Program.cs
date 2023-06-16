@@ -57,12 +57,15 @@ seeder.Initialize();
 //Console.WriteLine("RoomId: " + invoice.RoomId);
 //Console.WriteLine("PaymentDate: " + invoice.PaymentDate);
 //Console.WriteLine("Note: " + invoice.Note);
+
+//Console.WriteLine("--------------------------------------------");
 //foreach (var servicesInvoice in invoice.ServicesInvoices)
 //{
 
 //	Console.WriteLine("ServiceId: " + servicesInvoice.ServiceId);
 //	Console.WriteLine("Price: " + servicesInvoice.Price);
 //	Console.WriteLine("Quantity: " + servicesInvoice.Quantity);
+//	Console.WriteLine("");
 //}
 //Console.WriteLine("".PadRight(80, '-'));
 #endregion
@@ -94,7 +97,7 @@ seeder.Initialize();
 #endregion
 
 #region Task: Show invoice detail
-//var invoice = await repository.GetInvoiceDetailByIdAsync(6);
+//var invoice = await repository.GetInvoiceDetailByIdAsync(7);
 
 //Console.WriteLine("".PadRight(80, '-'));
 //Console.WriteLine("Invoice detail");
@@ -117,7 +120,6 @@ seeder.Initialize();
 #endregion
 
 #region Task: Delete invoice
-
 //Console.WriteLine("----------------------------------------");
 //Console.WriteLine("Task: Restore Services from recycle bin");
 
@@ -129,7 +131,6 @@ seeder.Initialize();
 //{
 //	Console.WriteLine("Result: Restore fail");
 //}
-
 #endregion
 
 
@@ -137,13 +138,13 @@ seeder.Initialize();
 //Console.WriteLine("----------------------------------------");
 //Console.WriteLine("Task: To modify the information regarding the room's service usage");
 
-//int invoiceId = 1;
+//int invoiceId = 2;
 
 //var servicesInvoices = new List<ServicesInvoiceDto>()
 //{
 //    new()
 //    {
-//        ServiceId = 8,
+//        ServiceId = 1,
 //        Quantity = 2,
 //    },
 //    new()
@@ -165,12 +166,14 @@ seeder.Initialize();
 //    Console.WriteLine("RoomId: " + invoice.RoomId);
 //    Console.WriteLine("PaymentDate: " + invoice.PaymentDate);
 //    Console.WriteLine("Note: " + invoice.Note);
+//    Console.WriteLine("-------------------------------------");
 //    foreach (var servicesInvoice in invoice.ServicesInvoices)
 //    {
 
 //        Console.WriteLine("ServiceId: " + servicesInvoice.ServiceId);
 //        Console.WriteLine("Price: " + servicesInvoice.Price);
 //        Console.WriteLine("Quantity: " + servicesInvoice.Quantity);
+//        Console.WriteLine();
 //    }
 //    Console.WriteLine("".PadRight(80, '-'));
 //}

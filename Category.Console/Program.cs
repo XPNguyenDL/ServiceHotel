@@ -18,7 +18,7 @@ seeder.Initialize();
 //var categories = await categoryRepository.GetCategoriesAsync();
 //foreach (var category in categories)
 //{
-//	Console.WriteLine("{0,-4}{1,-30}{2,-30}{3,12}", category.Name, category.Description, category.IsDeleted, category.ServicesCount);
+//	Console.WriteLine("{0,-4}\t{1,-30}{2,-30}{3,12}", category.Name, category.Description, category.IsDeleted, category.ServicesCount);
 //}
 #endregion
 
@@ -43,14 +43,14 @@ seeder.Initialize();
 //var newCat = new Category()
 //{
 //	//id  Category muốn thay đổi
-//	Id=1,
+//	Id = 1,
 //	Name = "New Category",
 //	Description = "Description",
 //	IsDeleted = false,
 //};
 //var updateCat = await categoryRepository.AddOrUpdateAsync(newCat);
 //if (updateCat)
-//	Console.WriteLine("sửa thành công");
+//	Console.WriteLine("Sửa thành công");
 //else
 //	Console.WriteLine("failed.");
 //Console.WriteLine("".PadRight(80, '-'));
@@ -71,7 +71,6 @@ seeder.Initialize();
 //Console.WriteLine("".PadRight(80, '-'));
 //Console.WriteLine("Change Category available status");
 //var categoryAvailable = await categoryRepository.GetDeletedCategoryAsync();
-
 
 //Console.WriteLine("{0,-5}{1,-10}{2,40}",
 //    "Id", "Name", "Description");

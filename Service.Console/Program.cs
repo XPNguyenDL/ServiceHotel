@@ -1,6 +1,9 @@
 using ServiceManagement.Data.Contexts;
 using ServiceManagement.Services.ServiceHotel;
 using System.Text;
+using ServiceManagement.Core.Collections;
+using ServiceManagement.Core.Entities;
+using ServiceManagement.Core.Queries;
 
 var context = new ServiceDbContext();
 IServiceRepository serviceRepository = new ServiceRepository(context);
@@ -11,19 +14,22 @@ Console.OutputEncoding = Encoding.UTF8;
 //Console.WriteLine("".PadRight(80, '-'));
 //Console.WriteLine("Create Service");
 
-//var createService = new Service() {
+//var createService = new Service()
+//{
 //    Name = "Dich vu test",
 //    ShortDescription = "Dich vu test  ShortDescription",
 //    Description = "Dich vu test  Description",
 //    CategoryId = 1
 //};
 //var createdService = await serviceRepository.CreateServiceAsync(createService);
-//var price = new Price() {
+//var price = new Price()
+//{
 //    ServicePrice = 200000,
 //    Discount = 0.2,
 //};
 //var createdPrice = await priceRepository.AddPriceAsync(price);
-//var priceHistory = new PriceHistory() {
+//var priceHistory = new PriceHistory()
+//{
 //    ModifyTime = DateTime.Now,
 //    PriceId = createdPrice.Id,
 //    ServiceId = createdService.Id,
@@ -58,7 +64,8 @@ Console.OutputEncoding = Encoding.UTF8;
 //Console.WriteLine("{0,-5}{1,-10}{2,40}{3,55}",
 //    "ID", "Name", "Short Description", "Description");
 
-//foreach (var item in services) {
+//foreach (var item in services)
+//{
 //    Console.WriteLine("{0,-5}{1,-10}{2,40}{3,55}",
 //        item.Id, item.Name, item.ShortDescription, item.Description);
 //}
@@ -92,7 +99,7 @@ Console.OutputEncoding = Encoding.UTF8;
 
 //service.Name = "Dịch vụ Taxi (update)";
 //service.ShortDescription = "Dịch vụ đặt xe taxi hộ";
-//service.Description = "Khi khách hàng sử dụng dịch vụ này, khách sạn sẽ đặt hộ taxi theo yêu cầu của khách hàng và không thu thêm bất kì chi phí dịch vụ nào.";
+//service.Description = "Dịch vụ đặt xe taxi.";
 //service.IsDeleted = false;
 //service.Available = true;
 //service.CategoryId = 3;

@@ -16,6 +16,11 @@ public class PriceRepository : IPriceRepository {
             .Where(p => p.ServiceId == id)
             .FirstOrDefaultAsync(cancellationToken);
 
+        if (priceHistory == null)
+        {
+	        return null;
+        }
+
         return await _context.Set<Price>()
             .Where(p => p.Id == priceHistory.PriceId)
             .FirstOrDefaultAsync(cancellationToken);

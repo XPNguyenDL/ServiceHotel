@@ -53,7 +53,7 @@ public interface IServiceRepository {
     /// <returns>Service</returns>
     Task<Service> GetServiceByIdAsync(int id, CancellationToken cancellationToken = default);
 
-    /// <summary>
+    /// <summary>   
     /// Restore services from recycle bin
     /// </summary>
     /// <param name="serviceId"></param>
